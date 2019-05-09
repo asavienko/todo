@@ -11,6 +11,15 @@ const StyledListItemMeta = styled(ListItemMeta)`
       text-decoration: ${({completedStyle}) => completedStyle ? "line-through" : "none"};
       color: ${({completedStyle}) => completedStyle ? "#999" : "none"};
 `;
+const StyledDeleteIcon = styled(Icon)`
+  cursor: pointer;
+  font-size: 17px;
+  transition: all .3s;
+  
+  :hover {
+  color: #666;
+}
+`;
 
 class TodoItem extends React.Component {
   constructor(props) {
@@ -18,36 +27,37 @@ class TodoItem extends React.Component {
     this.state = {
       showEditInput: false,
       editInputValue: "",
-      editInputId: null,
     }
   }
 
-  deleteItem = (id) => {
-    this.props.deleteTodoItem(id)
+  deleteItem = () => {
+    this.props.deleteTodoItem();
   };
 
-  switchShowCheckbox = (e, todoItemId) => {
-    this.props.switchShowTodoItem(todoItemId, e.target.checked)
+  switchShowCheckbox = (e) => {
+    const todoItemActive = e.target.checked;
+    this.props.switchShowTodoItem(todoItemActive);
   };
 
-  toggleInput = (item) => {
+  toggleInput = ({todoItem: editInputValue, todoItemId: editInputId}) => {
     this.setState({
       showEditInput: true,
-      editInputValue: item.todoItem,
-      editInputId: item.todoItemId,
+      editInputValue,
+      editInputId,
     });
   };
 
   saveEditInputChanges = () => {
+    const todoItem = this.state.editInputValue;
     this.props.editTodoItem(
-      this.state.editInputValue,
-      this.state.editInputId,
+      todoItem,
     );
     this.setState({showEditInput: false});
   };
 
   changeEditInput = (e) => {
-    this.setState({editInputValue: e.target.value})
+    const editInputValue = e.target.value;
+    this.setState({editInputValue});
   };
 
   render() {
@@ -67,15 +77,14 @@ class TodoItem extends React.Component {
           />
         </List.Item>) ||
       <List.Item
-        actions={[<Icon
-          className="dynamic-delete-button"
+        actions={[<StyledDeleteIcon
           type="delete"
-          onClick={() => this.deleteItem(item.todoItemId)}
+          onClick={this.deleteItem}
         />]}
       >
         <StyledCheckbox
           checked={item.todoItemActive}
-          onChange={(e) => this.switchShowCheckbox(e, item.todoItemId)}
+          onChange={this.switchShowCheckbox}
         />
         <StyledListItemMeta
           title={item.todoItem}
@@ -88,15 +97,15 @@ class TodoItem extends React.Component {
 }
 
 
-const mapDispatchToProps = (dispatch, {item : {todoItemId, todoItemActive}}) => {
+const mapDispatchToProps = (dispatch, {item: {todoItemId}}) => {
   return {
-    deleteTodoItem: (id) => {
-      dispatch(deleteTodoItem(id))
+    deleteTodoItem: () => {
+      dispatch(deleteTodoItem(todoItemId))
     },
-    switchShowTodoItem: (todoItemId, todoItemActive) => {
+    switchShowTodoItem: (todoItemActive) => {
       dispatch(switchShowTodoItem(todoItemId, todoItemActive))
     },
-    editTodoItem: (todoItem, todoItemId) => {
+    editTodoItem: (todoItem) => {
       dispatch(editTodoItem(todoItem, todoItemId))
     },
   }

@@ -1,11 +1,10 @@
 import {updateTodoList} from "./todoPureActions";
 
 export const addTodoItem = (todoItem) => (dispatch, getState) => {
-  const state = getState();
-  const {todoReducer} = state;
-  const newTodoList = todoReducer.todoList.concat([{
+  const {todoReducer: {todoList}} = getState();
+  const newTodoList = todoList.concat([{
     todoItem,
-    todoItemId: todoReducer.todoList.length,
+    todoItemId: todoList.length,
     todoItemActive: false,
   }]);
   return dispatch(updateTodoList(newTodoList))

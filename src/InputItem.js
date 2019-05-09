@@ -16,23 +16,37 @@ class InputItem extends React.Component {
     super(props);
     this.state = {
       todoInput: "",
+      checkedAll: false,
     }
   }
 
   onInputChange = (e) => {
-    this.setState({todoInput: e.target.value})
+    const todoInput = e.target.value;
+    this.setState({todoInput})
   };
   addInputToState = () => {
-    this.props.addTodoItem(this.state.todoInput);
-    this.setState({todoInput: ""});
+    const {todoInput} = this.state;
+    if (todoInput.trim()) {
+      this.props.addTodoItem(todoInput);
+      this.setState({todoInput: ""});
+    }
   };
   switchCompletedAll = () => {
-    this.props.switchCompletedAll()
+    this.props.switchCompletedAll();
+    const allValueChecked = this.props.todoList.every(
+      ({todoItemActive}) => todoItemActive === true
+    );
+    this.setState({checkedAll: allValueChecked});
+    console.log(allValueChecked)
   };
 
   render() {
     return <StyledWrapper>
       <StyledCheckbox
+        checked={this.state.checkedAll}  /*The checkbox was worked not right, i made the controlled component,
+        but I need to do switchCompletedAll function when I click to child checkboxes in the list.
+        Because, when I click the checkbox in the list, checkbox in this component dose not refresh.
+        How to do it the right way? I thought to hold the value of this component in Redux Store*/
         onChange={this.switchCompletedAll}
         disabled={this.props.todoList.length === 0}
       />
