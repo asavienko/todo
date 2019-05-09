@@ -88,7 +88,7 @@ class TodoItem extends React.Component {
 }
 
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, {item : {todoItemId, todoItemActive}}) => {
   return {
     deleteTodoItem: (id) => {
       dispatch(deleteTodoItem(id))
