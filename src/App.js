@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import './App.css';
+import React, { Component } from "react";
 import Todo from "./Todo";
 import styled from "styled-components";
 
@@ -16,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <StyledApp>
-        <Todo/>
+        <Todo />
       </StyledApp>
     );
   }
