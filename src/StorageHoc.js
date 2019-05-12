@@ -2,12 +2,9 @@ import React from 'react';
 
 const withStorageHoc = Component => {
   return class HocComponent extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        isLocalStorageExist: false
-      };
-    }
+    state = {
+      isLocalStorageExist: false
+    };
 
     componentDidMount() {
       this.checkLocalStorageExist();

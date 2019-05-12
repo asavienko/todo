@@ -2,13 +2,10 @@ import React from 'react';
 import withStorageHoc from './StorageHoc';
 
 class Component extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      favoriteMovie: ''
-    };
-  }
+  state = {
+    username: '',
+    favoriteMovie: ''
+  };
 
   componentDidMount() {
     const loadItem = this.props;
