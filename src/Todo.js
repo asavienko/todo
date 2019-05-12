@@ -1,9 +1,11 @@
-import React from "react";
-import InputItem from "./InputItem";
-import { ConfigProvider, Icon, List } from "antd";
-import { connect } from "react-redux";
-import TodoItem from "./TodoItem";
-import styled from "styled-components";
+import React from 'react';
+import InputItem from './InputItem';
+import { ConfigProvider, Icon, List } from 'antd';
+import { connect } from 'react-redux';
+import TodoItem from './TodoItem';
+import styled from 'styled-components';
+import StorageHoc from './StorageHoc';
+import UserNameComponent from './Component';
 
 const StyledDivForCustomizeRenderEmpty = styled.div`
   text-align: center;
@@ -40,6 +42,7 @@ class Todo extends React.Component {
           dataSource={this.props.todoList}
           renderItem={item => <TodoItem item={item} key={item.todoItemId} />}
         />
+        <UserNameComponent />
       </ConfigProvider>
     );
   }
