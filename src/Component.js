@@ -8,7 +8,7 @@ class Component extends React.Component {
   };
 
   componentDidMount() {
-    const loadItem = this.props;
+    const { loadItem } = this.props;
     const username = loadItem('username') || '';
     const favoriteMovie = loadItem('favoriteMovie') || '';
     this.setState({ username, favoriteMovie });
@@ -34,7 +34,12 @@ class Component extends React.Component {
         ) : (
           <div>
             <input type="text" name={'username'} value={username} onChange={this.setValueToState} />
-            <input type="text" name={'favoriteMovie'} value={favoriteMovie} />
+            <input
+              type="text"
+              name={'favoriteMovie'}
+              value={favoriteMovie}
+              onChange={this.setValueToState}
+            />
             <button onClick={this.setDataToLocalStorage}>submit</button>
           </div>
         )}
