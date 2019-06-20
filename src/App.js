@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import Todo from "./Todo";
-import styled from "styled-components";
+import React, { Component } from 'react';
+import Todo from './Todo';
+import styled from 'styled-components';
 
 const StyledApp = styled.div`
   text-align: center;
